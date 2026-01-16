@@ -8,7 +8,7 @@ app.use(express.json()); // Middleware to parse JSON [cite: 16]
 
 // Routes
 app.get('/', (req, res) => {
-  res.send('Welcome to the Recipe API! Go to /api/recipes to see the data.');
+  res.redirect('/api/recipes');
 });
 app.use('/api/recipes', recipeRoutes);
 
