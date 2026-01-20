@@ -6,20 +6,19 @@ const recipeRoutes = require('./routes/recipeRoutes');
 const app = express();
 app.use(express.json());
 
-// 1. Define Routes
-app.get('/', (req, res) => {
-  res.redirect('/api/recipes');
-});
+// --- HARDCODED CONNECTION STRING (For Testing) ---
+// We use the NEW password (render1234) and the database name (RecipesDB)
+const MONGO_URI = "mongodb+srv://myUser:render1234@cluster0.ym57j9z.mongodb.net/RecipesDB?retryWrites=true&w=majority";
+
+mongoose.connect(MONGO_URI)
+    .then(() => console.log("✅✅✅ SUCCESS: Connected to MongoDB! ✅✅✅"))
+    .catch(err => console.error("❌❌❌ FAILURE: MongoDB Connection Error:", err));
+
+// Routes
+app.get('/', (req, res) => res.redirect('/api/recipes'));
 app.use('/api/recipes', recipeRoutes);
 
-// 2. Connect to Database (Non-blocking)
-// notice we removed the .then() wrapper around app.listen
-mongoose.connect("mongodb+srv://myUser:Password123@cluster0.ym57j9z.mongodb.net/RecipesDB?appName=Cluster0")
-    .then(() => console.log("Connected to MongoDB"))
-    .catch(err => console.error("MongoDB Connection Error:", err));
-
-// 3. Start Server IMMEDIATELY
-// This tells Render "I am alive" right away, stopping the restart loop.
+// Start Server
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
     console.log(`Server running on port ${PORT}`);
