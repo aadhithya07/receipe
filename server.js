@@ -14,7 +14,7 @@ app.use('/api/recipes', recipeRoutes);
 
 // 2. Connect to Database (Non-blocking)
 // notice we removed the .then() wrapper around app.listen
-mongoose.connect(process.env.MONGO_URI)
+mongoose.connect("mongodb+srv://myUser:Password123@cluster0.ym57j9z.mongodb.net/RecipesDB?appName=Cluster0")
     .then(() => console.log("Connected to MongoDB"))
     .catch(err => console.error("MongoDB Connection Error:", err));
 
